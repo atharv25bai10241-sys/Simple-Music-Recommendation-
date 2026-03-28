@@ -1,4 +1,4 @@
-# 🎵 Moodify — Mood-Based Music Recommender
+# Moodify — Mood-Based Music Recommender
 
 ## Project Overview
 
@@ -6,13 +6,13 @@ Moodify is an AI-powered music recommendation system that suggests the perfect m
 
 The project has two components: a clean web-based interface for everyday use, and a Python ML backend using a Decision Tree classifier for the actual recommendation logic.
 
----
+
 
 ## Problem Statement
 
 People often don't know what to listen to based on their current mood or situation. Existing music apps recommend based on listening history, not how you actually feel right now. Moodify bridges this gap by taking simple human inputs — mood, energy, time, activity — and mapping them to the most fitting music using machine learning.
 
----
+
 
 ## Target Users
 
@@ -21,7 +21,6 @@ People often don't know what to listen to based on their current mood or situati
 - People who spend too long choosing what to listen to
 - Developers and researchers exploring mood-based recommendation systems
 
----
 
 ## Features
 
@@ -56,8 +55,6 @@ People often don't know what to listen to based on their current mood or situati
    - Session logging to JSON for history tracking
    - Model persistence with pickle
 
----
-
 ## Technologies Used
 
 | Component | Technology |
@@ -69,7 +66,6 @@ People often don't know what to listen to based on their current mood or situati
 | Data Storage | JSON |
 | Music Links | YouTube Search URLs |
 
----
 
 ## Project Structure
 
@@ -81,8 +77,6 @@ moodify/
 ├── mood_model.pkl      # Auto-generated trained model
 └── recommendation_log.json  # Auto-generated session history
 ```
-
----
 
 ## Setup & Installation
 
@@ -116,8 +110,6 @@ Or on Windows with multiple Python versions:
 ```bash
 py -3.13 musicrecommender.py
 ```
-
----
 
 ## How to Use
 
@@ -175,7 +167,6 @@ YouTube search links generated
 - **Model Persistence** — trained model saved with `pickle` so it doesn't retrain every run
 - **Rule-Based Scoring** — web version uses a weighted scoring system to complement the ML model
 ```
----
 ```
 ## Music Categories
 
@@ -193,7 +184,7 @@ YouTube search links generated
 | Ambient | Sleep Sounds |
 | Retro | 90s Hindi, 2000s English |
 
----
+
 ```
 ```
 ## Sample Output
