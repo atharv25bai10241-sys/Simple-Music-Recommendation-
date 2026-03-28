@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Moodify — Music Recommender</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --surface2: #1e1e1e;
+      --border: #2a2a2a;
+      --text: #f0ece4;
+      --muted: #6b6b6b;
+      --accent: #e8c547;
+      --accent2: #e87c47;
+      --accent3: #47b8e8;
+      --green: #47e8a0;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Animated background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 20% 20%, rgba(232,197,71,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 60% at 80% 80%, rgba(71,184,232,0.05) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 50% at 60% 40%, rgba(232,124,71,0.04) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .header-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(232,197,71,0.08);
+      border: 1px solid rgba(232,197,71,0.2);
+      padding: 0.35rem 1rem;
+      border-radius: 999px;
+      margin-bottom: 1.25rem;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 0.95rem;
+      font-weight: 300;
+      max-width: 400px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* Form */
+    .form-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2.5rem;
+      margin-bottom: 2rem;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group { display: flex; flex-direction: column; gap: 0.6rem; }
+    .form-group.full { grid-column: 1 / -1; }
+
+    label {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    select, input[type="range"] {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      width: 100%;
+      appearance: none;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    select:hover, select:focus { border-color: var(--accent); outline: none; }
+
+    select option { background: #1e1e1e; }
+
+    /* Range slider */
+    .range-wrap { display: flex; flex-direction: column; gap: 0.6rem; }
+
+    .range-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    .range-value {
+      font-size: 0.8rem;
+      color: var(--accent);
+      font-weight: 500;
+      text-align: right;
+    }
+
+    input[type="range"] {
+      padding: 0;
+      height: 4px;
+      border-radius: 999px;
+      background: linear-gradient(to right, var(--accent) var(--val, 50%), var(--border) var(--val, 50%));
+      border: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+      box-shadow: 0 0 8px rgba(232,197,71,0.4);
+    }
+
+    /* Chips */
+    .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+    .chip {
+      padding: 0.45rem 1rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--surface2);
+      color: var(--muted);
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      user-select: none;
+    }
+
+    .chip:hover { border-color: var(--accent); color: var(--text); }
+    .chip.active {
+      background: rgba(232,197,71,0.12);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* Button */
+    .btn {
+      width: 100%;
+      padding: 1rem;
+      background: var(--accent);
+      color: #0d0d0d;
+      border: none;
+      border-radius: 12px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: 0.02em;
+    }
+
+    .btn:hover {
+      background: #f0d060;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(232,197,71,0.25);
+    }
+
+    .btn:active { transform: translateY(0); }
+
+    /* Results */
+    #results { animation: fadeUp 0.5s ease both; }
+
+    .results-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .mood-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1.2rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    .vibe-label {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .rec-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .rec-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      transition: all 0.25s;
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .rec-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      opacity: 0.6;
+    }
+
+    .rec-card:hover {
+      border-color: rgba(232,197,71,0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+    }
+
+    .rec-genre {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .rec-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+      line-height: 1.3;
+    }
+
+    .rec-desc {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+
+    .rec-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 0.4rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid currentColor;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+
+    .rec-link:hover { opacity: 0.8; }
+
+    @keyframes fadeUp {
+      from { opacity:0; transform: translateY(16px); }
+      to { opacity:1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .rec-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="header-tag">✦ AI Music Recommender</div>
+    <h1>What's your <em>mood</em><br>right now?</h1>
+    <p class="subtitle">Tell us how you feel and we'll find the perfect music for this moment.</p>
+  </div>
+
+  <div class="form-card">
+    <div class="form-grid">
+
+      <div class="form-group">
+        <label>Time of Day</label>
+        <select id="time">
+          <option value="morning">🌅 Morning (5am – 12pm)</option>
+          <option value="afternoon">☀️ Afternoon (12pm – 5pm)</option>
+          <option value="evening" selected>🌆 Evening (5pm – 9pm)</option>
+          <option value="night">🌙 Night (9pm – 5am)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Current Activity</label>
+        <select id="activity">
+          <option value="studying">📚 Studying / Working</option>
+          <option value="workout">🏋️ Workout / Exercise</option>
+          <option value="relaxing">🛋️ Relaxing / Chilling</option>
+          <option value="commuting">🚗 Commuting / Travelling</option>
+          <option value="cooking">🍳 Cooking / Eating</option>
+          <option value="partying">🎉 Party / Hanging out</option>
+          <option value="sleeping">😴 Winding down / Sleeping</option>
+        </select>
+      </div>
+
+      <div class="form-group full">
+        <label>Energy Level</label>
+        <div class="range-wrap">
+          <div style="display:flex; justify-content:space-between; align-items:center">
+            <span style="font-size:0.75rem; color:var(--muted)">😴 Low</span>
+            <span class="range-value" id="energy-val">5 / 10</span>
+            <span style="font-size:0.75rem; color:var(--muted)">⚡ High</span>
+          </div>
+          <input type="range" id="energy" min="1" max="10" value="5"
+            oninput="updateRange(this)"/>
+        </div>
+      </div>
+
+      <div class="form-group full">
+        <label>How are you feeling?</label>
+        <div class="chips" id="mood-chips">
+          <div class="chip active" data-mood="happy">😊 Happy</div>
+          <div class="chip" data-mood="sad">😔 Sad</div>
+          <div class="chip" data-mood="focused">🎯 Focused</div>
+          <div class="chip" data-mood="romantic">💕 Romantic</div>
+          <div class="chip" data-mood="angry">😤 Angry / Stressed</div>
+          <div class="chip" data-mood="nostalgic">🌙 Nostalgic</div>
+          <div class="chip" data-mood="hyped">🔥 Hyped</div>
+          <div class="chip" data-mood="chill">😌 Chill</div>
+          <div class="chip" data-mood="lonely">🌧️ Lonely</div>
+          <div class="chip" data-mood="motivated">💪 Motivated</div>
+        </div>
+      </div>
+
+    </div>
+
+    <button class="btn" onclick="recommend()">✦ Find My Music</button>
+  </div>
+
+  <div id="results" style="display:none"></div>
+
+</div>
+
+<script>
+  // ── Chip selection ──
+  document.querySelectorAll(".chip").forEach(chip => {
+    chip.addEventListener("click", () => {
+      document.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
+      chip.classList.add("active");
+    });
+  });
+
+  // ── Range slider ──
+  function updateRange(el) {
+    const val = el.value;
+    document.getElementById("energy-val").textContent = `${val} / 10`;
+    el.style.setProperty("--val", `${(val - 1) / 9 * 100}%`);
+  }
+  updateRange(document.getElementById("energy"));
+
+  // ── Music database ──
+  const musicDB = {
+    // Each entry: { title, genre, desc, color, ytQuery }
+    lo_fi_study:       { title: "Lo-Fi Study Beats",        genre: "Lo-Fi",               desc: "Mellow, repetitive beats perfect for deep focus and concentration.", color: "#47b8e8", ytQuery: "lofi hip hop study beats" },
+    lo_fi_chill:       { title: "Lo-Fi Chill Vibes",        genre: "Lo-Fi",               desc: "Soft jazzy lo-fi to help you unwind without overthinking.", color: "#47b8e8", ytQuery: "lofi chill vibes playlist" },
+    bollywood_happy:   { title: "Bollywood Party Hits",     genre: "Bollywood",           desc: "High-energy Bollywood bangers to get you moving.", color: "#e87c47", ytQuery: "bollywood party songs 2024" },
+    bollywood_sad:     { title: "Bollywood Heartbreak",     genre: "Bollywood",           desc: "Emotional Bollywood melodies for when the feelings hit hard.", color: "#e87c47", ytQuery: "bollywood sad songs playlist" },
+    bollywood_romantic:{ title: "Bollywood Romance",        genre: "Bollywood",           desc: "Soft, dreamy Bollywood love songs for tender moments.", color: "#e87c47", ytQuery: "bollywood romantic songs playlist" },
+    bollywood_motivate:{ title: "Bollywood Pump Up",        genre: "Bollywood",           desc: "Motivational Bollywood tracks to push through any challenge.", color: "#e87c47", ytQuery: "bollywood motivational songs" },
+    english_happy:     { title: "Feel-Good Pop",            genre: "English / Pop",       desc: "Upbeat pop anthems guaranteed to lift your spirits instantly.", color: "#e8c547", ytQuery: "feel good pop songs playlist 2024" },
+    english_sad:       { title: "Sad Indie / Acoustic",     genre: "English / Indie",     desc: "Honest, raw acoustic songs for sitting with your emotions.", color: "#e8c547", ytQuery: "sad indie acoustic songs playlist" },
+    english_hype:      { title: "Hype Anthems",             genre: "English / Pop-Rock",  desc: "Loud, energetic tracks to match your high-octane energy.", color: "#e8c547", ytQuery: "hype songs pump up playlist" },
+    english_night:     { title: "Late Night Vibes",         genre: "English / Alternative",desc: "Atmospheric tracks perfect for late nights and quiet streets.", color: "#e8c547", ytQuery: "late night vibes playlist" },
+    hiphop_hype:       { title: "Hip-Hop Bangers",          genre: "Hip-Hop / Rap",       desc: "Hard-hitting rap tracks for maximum confidence and energy.", color: "#47e8a0", ytQuery: "hip hop bangers playlist 2024" },
+    hiphop_chill:      { title: "Chill Rap / R&B",          genre: "Hip-Hop / R&B",       desc: "Smooth, laid-back rap and R&B for effortless cool.", color: "#47e8a0", ytQuery: "chill rap rnb playlist" },
+    hiphop_motivate:   { title: "Workout Rap",              genre: "Hip-Hop / Rap",       desc: "High-BPM rap tracks designed to push your limits.", color: "#47e8a0", ytQuery: "workout rap hip hop playlist" },
+    classical_focus:   { title: "Classical Focus",          genre: "Classical",           desc: "Bach, Mozart, Beethoven — timeless music for deep concentration.", color: "#c47ae8", ytQuery: "classical music for focus and concentration" },
+    classical_calm:    { title: "Ambient Classical",        genre: "Classical / Ambient", desc: "Soft piano and strings for relaxation and inner peace.", color: "#c47ae8", ytQuery: "relaxing classical piano music" },
+    instrumental_work: { title: "Cinematic Instrumental",  genre: "Instrumental",        desc: "Epic orchestral and cinematic scores for feeling unstoppable.", color: "#c47ae8", ytQuery: "cinematic instrumental music focus" },
+    edm_party:         { title: "EDM / Dance",              genre: "EDM",                 desc: "Pulsing electronic beats to keep the energy maxed out.", color: "#e847a0", ytQuery: "edm dance party playlist 2024" },
+    jazz_morning:      { title: "Morning Jazz",             genre: "Jazz",                desc: "Warm, breezy jazz to ease into the day with elegance.", color: "#e8a847", ytQuery: "morning jazz playlist cafe" },
+    acoustic_morning:  { title: "Acoustic Morning",         genre: "Acoustic / Folk",     desc: "Light acoustic guitars and gentle vocals for a fresh start.", color: "#a8e847", ytQuery: "acoustic morning playlist folk" },
+    sleep_ambient:     { title: "Sleep Sounds / Ambient",   genre: "Ambient",             desc: "Soft textures, rain sounds, and drones to ease you to sleep.", color: "#4785e8", ytQuery: "sleep music ambient sounds relaxing" },
+    workout_edm:       { title: "Workout EDM / Rock",       genre: "EDM / Rock",          desc: "Driving beats and power chords for destroying your workout.", color: "#e84747", ytQuery: "workout music edm rock playlist" },
+    nostalgic_hindi:   { title: "90s Hindi Classics",       genre: "Bollywood / Retro",   desc: "Golden era Bollywood that takes you straight back in time.", color: "#e8c547", ytQuery: "90s hindi songs golden era" },
+    nostalgic_english: { title: "2000s Throwbacks",         genre: "English / Retro",     desc: "Pop and rock hits from the 2000s dripping with nostalgia.", color: "#e8c547", ytQuery: "2000s throwback songs playlist" },
+  };
+
+  // ── Recommendation engine (rule-based ML logic) ──
+  function getRecommendations(mood, energy, time, activity) {
+    const e = parseInt(energy);
+    const recs = [];
+
+    // Rule-based scoring system
+    const rules = [
+      // Studying
+      { cond: activity === "studying" && e <= 5,                    keys: ["lo_fi_study", "classical_focus", "instrumental_work"] },
+      { cond: activity === "studying" && e > 5,                     keys: ["lo_fi_study", "classical_focus", "hiphop_chill"] },
+      // Workout
+      { cond: activity === "workout",                                keys: ["workout_edm", "hiphop_motivate", "bollywood_motivate", "english_hype"] },
+      // Sleeping
+      { cond: activity === "sleeping",                               keys: ["sleep_ambient", "classical_calm", "lo_fi_chill"] },
+      // Morning
+      { cond: time === "morning" && activity !== "workout",          keys: ["jazz_morning", "acoustic_morning", "bollywood_happy"] },
+      // Party
+      { cond: activity === "partying",                               keys: ["bollywood_happy", "edm_party", "hiphop_hype", "english_hype"] },
+      // Cooking
+      { cond: activity === "cooking",                                keys: ["bollywood_happy", "english_happy", "jazz_morning"] },
+      // Commuting
+      { cond: activity === "commuting" && e > 6,                    keys: ["hiphop_hype", "english_hype", "bollywood_motivate"] },
+      { cond: activity === "commuting" && e <= 6,                    keys: ["hiphop_chill", "lo_fi_chill", "english_night"] },
+      // Mood-based
+      { cond: mood === "happy",                                      keys: ["bollywood_happy", "english_happy", "edm_party"] },
+      { cond: mood === "sad",                                        keys: ["bollywood_sad", "english_sad", "lo_fi_chill"] },
+      { cond: mood === "focused",                                    keys: ["lo_fi_study", "classical_focus", "instrumental_work"] },
+      { cond: mood === "romantic",                                   keys: ["bollywood_romantic", "english_sad", "jazz_morning"] },
+      { cond: mood === "angry",                                      keys: ["hiphop_hype", "workout_edm", "english_hype"] },
+      { cond: mood === "nostalgic",                                  keys: ["nostalgic_hindi", "nostalgic_english", "bollywood_sad"] },
+      { cond: mood === "hyped",                                      keys: ["edm_party", "hiphop_hype", "bollywood_happy", "workout_edm"] },
+      { cond: mood === "chill",                                      keys: ["lo_fi_chill", "hiphop_chill", "classical_calm"] },
+      { cond: mood === "lonely",                                     keys: ["bollywood_sad", "english_sad", "lo_fi_chill"] },
+      { cond: mood === "motivated",                                  keys: ["hiphop_motivate", "bollywood_motivate", "instrumental_work", "workout_edm"] },
+      // Night
+      { cond: time === "night",                                      keys: ["english_night", "lo_fi_chill", "hiphop_chill"] },
+      // High energy fallback
+      { cond: e >= 8,                                                keys: ["edm_party", "hiphop_hype", "workout_edm"] },
+      // Low energy fallback
+      { cond: e <= 3,                                                keys: ["classical_calm", "sleep_ambient", "lo_fi_chill"] },
+    ];
+
+    const scored = {};
+    rules.forEach(rule => {
+      if (rule.cond) {
+        rule.keys.forEach((key, i) => {
+          scored[key] = (scored[key] || 0) + (3 - i);
+        });
+      }
+    });
+
+    // Sort by score and take top 4
+    const sorted = Object.entries(scored)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 4)
+      .map(([key]) => ({ key, ...musicDB[key] }));
+
+    return sorted;
+  }
+
+  function getMoodLabel(mood, energy, time) {
+    const e = parseInt(energy);
+    if (e >= 8) return "Electrified ⚡";
+    if (mood === "happy" && e >= 6) return "Radiant & Joyful ✨";
+    if (mood === "sad") return "Feeling the Blues 🌧️";
+    if (mood === "focused") return "Deep Focus Mode 🎯";
+    if (mood === "romantic") return "In Your Feelings 💕";
+    if (mood === "nostalgic") return "Lost in Memories 🌙";
+    if (mood === "hyped") return "On Fire 🔥";
+    if (mood === "chill") return "Pure Chill Mode 😌";
+    if (mood === "lonely") return "Quiet & Reflective 🌧️";
+    if (mood === "motivated") return "Unstoppable 💪";
+    if (mood === "angry") return "Venting Out 😤";
+    if (time === "morning") return "Fresh Morning Start 🌅";
+    if (time === "night") return "Late Night Feels 🌙";
+    return "Good Vibes Only ✦";
+  }
+
+  function recommend() {
+    const mood = document.querySelector(".chip.active")?.dataset.mood || "happy";
+    const energy = document.getElementById("energy").value;
+    const time = document.getElementById("time").value;
+    const activity = document.getElementById("activity").value;
+
+    const recs = getRecommendations(mood, energy, time, activity);
+    const moodLabel = getMoodLabel(mood, energy, time);
+
+    if (recs.length === 0) {
+      document.getElementById("results").innerHTML = `<p style="color:var(--muted);text-align:center">No recommendations found. Try different inputs!</p>`;
+      document.getElementById("results").style.display = "block";
+      return;
+    }
+
+    const cards = recs.map(rec => {
+      const ytUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(rec.ytQuery)}`;
+      return `
+        <a class="rec-card" href="${ytUrl}" target="_blank" style="--card-color:${rec.color}">
+          <div style="position:absolute;top:0;left:0;right:0;height:3px;background:${rec.color};opacity:0.7"></div>
+          <div class="rec-genre">${rec.genre}</div>
+          <div class="rec-title">${rec.title}</div>
+          <div class="rec-desc">${rec.desc}</div>
+          <span class="rec-link" style="color:${rec.color}">
+            ▶ Play on YouTube
+          </span>
+        </a>
+      `;
+    }).join("");
+
+    document.getElementById("results").innerHTML = `
+      <div class="results-header">
+        <div class="vibe-label">${moodLabel}</div>
+      </div>
+      <div class="rec-grid">${cards}</div>
+    `;
+
+    document.getElementById("results").style.display = "block";
+    document.getElementById("results").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+</script>
+</body>
+</html>
