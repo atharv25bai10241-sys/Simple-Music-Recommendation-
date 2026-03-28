@@ -150,7 +150,7 @@ Current activity: relaxing
 2. Bollywood Party Hits [Bollywood]
    ...
 
-
+```
 ## How It Works
 
 
@@ -166,7 +166,7 @@ Top 4 recommendations ranked by confidence
         ↓
 YouTube search links generated
 ```
-
+```
 ### ML Concepts Used
 
 - **Decision Tree Classification** — learns rules from training data to map mood inputs to music categories
@@ -176,9 +176,9 @@ YouTube search links generated
 - **Rule-Based Scoring** — web version uses a weighted scoring system to complement the ML model
 ```
 ---
-
-## Music Categories
 ```
+## Music Categories
+
 | Genre | Examples |
 |---|---|
 | Lo-Fi | Study Beats, Chill Vibes |
