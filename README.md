@@ -195,6 +195,7 @@ YouTube search links generated
 
 ---
 ```
+```
 ## Sample Output
 
 ### Web App
