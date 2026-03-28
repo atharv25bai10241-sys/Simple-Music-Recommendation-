@@ -76,7 +76,7 @@ People often don't know what to listen to based on their current mood or situati
 ```
 moodify/
 ├── index.html          # Web app — open in browser for full UI
-├── recommender.py      # Python ML backend — CLI version
+├── musicrecommender.py      # Python ML backend — CLI version
 ├── requirements.txt    # Python dependencies
 ├── mood_model.pkl      # Auto-generated trained model
 └── recommendation_log.json  # Auto-generated session history
@@ -110,11 +110,11 @@ Simply double-click `index.html` or open it in any browser. No server required.
 
 **4. Run the Python CLI version**
 ```bash
-python recommender.py
+python musicrecommender.py
 ```
 Or on Windows with multiple Python versions:
 ```bash
-py -3.13 recommender.py
+py -3.13 musicrecommender.py
 ```
 
 ---
