@@ -166,8 +166,7 @@ YouTube search links generated
 - **Probability-Based Ranking** — uses `predict_proba()` to rank all possible recommendations by confidence
 - **Model Persistence** — trained model saved with `pickle` so it doesn't retrain every run
 - **Rule-Based Scoring** — web version uses a weighted scoring system to complement the ML model
-```
-```
+
 ## Music Categories
 
 | Genre | Examples |
@@ -185,8 +184,7 @@ YouTube search links generated
 | Retro | 90s Hindi, 2000s English |
 
 
-```
-```
+
 ## Sample Output
 
 ### Web App
