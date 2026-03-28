@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Moodify is an AI-powered music recommendation system that suggests the perfect music based on how you're feeling right now. Instead of scrolling endlessly through playlists, simply tell Moodify your mood, energy level, time of day, and current activity — and it instantly recommends the best music categories with direct YouTube links.
+Moodify is an AI-powered music recommendation system that suggests the perfect music based on how you're feeling right now. Instead of scrolling endlessly through playlists, simply tell Moodify your mood, energy level, time of day, and current activity and it instantly recommends the best music categories with direct YouTube links.
 
 The project has two components: a clean web-based interface for everyday use, and a Python ML backend using a Decision Tree classifier for the actual recommendation logic.
 
@@ -150,7 +150,7 @@ Current activity: relaxing
 2. Bollywood Party Hits [Bollywood]
    ...
 
-```
+
 ## How It Works
 
 
@@ -166,7 +166,7 @@ Top 4 recommendations ranked by confidence
         ↓
 YouTube search links generated
 ```
-```
+
 ### ML Concepts Used
 
 - **Decision Tree Classification** — learns rules from training data to map mood inputs to music categories
