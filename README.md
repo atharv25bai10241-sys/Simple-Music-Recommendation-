@@ -95,7 +95,7 @@ moodify/
 
 **1. Clone the repository**
 ```bash
-git clone https://github.com/yourusername/moodify.git
+git clone https://github.com/atharv25bai10241-sys/moodify.git
 cd moodify
 ```
 
@@ -153,7 +153,7 @@ Current activity: relaxing
 
 ## How It Works
 
-```
+
 User inputs (mood, energy, time, activity)
         ↓
 Feature encoding (text → numbers)
@@ -174,7 +174,7 @@ YouTube search links generated
 - **Probability-Based Ranking** — uses `predict_proba()` to rank all possible recommendations by confidence
 - **Model Persistence** — trained model saved with `pickle` so it doesn't retrain every run
 - **Rule-Based Scoring** — web version uses a weighted scoring system to complement the ML model
-
+```
 ---
 
 ## Music Categories
@@ -194,7 +194,7 @@ YouTube search links generated
 | Retro | 90s Hindi, 2000s English |
 
 ---
-
+```
 ## Sample Output
 
 ### Web App
