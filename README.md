@@ -1,34 +1,25 @@
-# MOODIFY: Mood-Based Music Recommender
+# 🎵 Moodify — Mood-Based Music Recommender
 
 ## Project Overview
 
-MOODIFY is an interactive web-based music recommendation system designed to suggest songs based on a user’s mood, energy level, and activity. Inspired by modern music streaming platforms, the system dynamically adapts recommendations using user input, listening behavior, and simulated trending data.
+Moodify is an AI-powered music recommendation system that suggests the perfect music based on how you're feeling right now. Instead of scrolling endlessly through playlists, simply tell Moodify your mood, energy level, time of day, and current activity — and it instantly recommends the best music categories with direct YouTube links.
 
-The platform provides a personalized music discovery experience through a simple and intuitive interface, combining recommendation logic with real-time interaction and dynamic content updates.
+The project has two components: a clean web-based interface for everyday use, and a Python ML backend using a Decision Tree classifier for the actual recommendation logic.
 
 ---
 
 ## Problem Statement
 
-With millions of songs available on music platforms, users often struggle to find music that matches their current mood or situation. Traditional recommendation systems mainly rely on past listening history and lack:
-
-- Real-time mood-based recommendations  
-- Context-aware suggestions (activity, energy level)  
-- Dynamic adaptation to changing trends  
-- Personalized feedback-based learning  
-- Lightweight and accessible recommendation systems for learning purposes  
-
-MOODIFY addresses these limitations by providing a system that combines mood-based filtering, user interaction, and simulated trends to generate meaningful and engaging music recommendations.
+People often don't know what to listen to based on their current mood or situation. Existing music apps recommend based on listening history, not how you actually feel right now. Moodify bridges this gap by taking simple human inputs — mood, energy, time, activity — and mapping them to the most fitting music using machine learning.
 
 ---
 
 ## Target Users
 
-- Students exploring recommendation systems  
-- Music listeners seeking mood-based playlists  
-- Beginners learning AI/ML concepts  
-- Developers interested in building intelligent systems  
-- Educational institutions demonstrating applied AI concepts  
+- Students who need the right music for studying or working out
+- Anyone who wants music that actually matches their current vibe
+- People who spend too long choosing what to listen to
+- Developers and researchers exploring mood-based recommendation systems
 
 ---
 
@@ -37,198 +28,183 @@ MOODIFY addresses these limitations by providing a system that combines mood-bas
 ### Core Features
 
 1. **Mood-Based Recommendation Engine**
-   - Accepts user mood (happy, sad, calm, stressed, etc.)
-   - Maps moods to relevant music genres
-   - Generates context-aware song suggestions  
+   - 10 mood categories: Happy, Sad, Focused, Romantic, Angry, Nostalgic, Hyped, Chill, Lonely, Motivated
+   - Decision Tree classifier trained on mood + energy + time + activity inputs
+   - Returns top 4 recommendations ranked by confidence score
 
-2. **Energy & Activity Filtering**
-   - Adjusts recommendations based on energy level  
-   - Supports activities like study, workout, relaxation  
-   - Improves personalization accuracy  
+2. **Rich Music Database**
+   - 23 curated music categories spanning all major genres
+   - Covers Bollywood, English/Pop, Lo-Fi, Hip-Hop/Rap, Classical, Instrumental, EDM, Jazz, Acoustic, Ambient
+   - Every recommendation links directly to a YouTube search — effectively infinite songs
 
-3. **Dynamic Scoring System**
-   - Songs ranked using multiple parameters:
-     - Trend score (popularity)
-     - Mood compatibility
-     - User listening frequency
-     - Energy alignment  
+3. **Smart Input System**
+   - Energy level slider (1–10)
+   - Time of day selector (Morning / Afternoon / Evening / Night)
+   - Activity selector (Studying, Workout, Relaxing, Commuting, Cooking, Partying, Sleeping)
+   - Mood chips for one-tap selection
 
-4. **User Preference Learning**
-   - Tracks songs selected by the user  
-   - Prioritizes frequently listened artists  
-   - Adapts recommendations over time  
+4. **Web Interface**
+   - Fully self-contained HTML file — no server needed, just open in a browser
+   - Elegant dark-themed UI with smooth animations
+   - One-click YouTube links for every recommendation
+   - Works offline (except YouTube links)
 
-5. **Trend Simulation**
-   - Randomly updates song popularity  
-   - Adds new songs dynamically  
-   - Mimics real-world platforms like Spotify  
-
-6. **Web-Based Interface**
-   - Built using Flask  
-   - Interactive HTML frontend  
-   - Runs locally in browser  
-
-7. **Scalable Design**
-   - Easily extendable dataset  
-   - Modular recommendation logic  
-   - Supports future ML integration  
+5. **Python ML Backend**
+   - Decision Tree classifier (scikit-learn)
+   - Feature encoding for categorical inputs
+   - Probability-based ranking of recommendations
+   - Session logging to JSON for history tracking
+   - Model persistence with pickle
 
 ---
 
-## Technologies & Tools Used
+## Technologies Used
 
-- **Programming Language**: Python 3.x  
-- **Framework**: Flask  
-- **Libraries**:
-  - `pandas` – Data handling  
-  - `numpy` – Numerical operations  
-  - `random` – Trend simulation  
-- **Frontend**: HTML, CSS  
-- **Platform**: Web-based (Localhost)  
+| Component | Technology |
+|---|---|
+| ML Model | scikit-learn (Decision Tree Classifier) |
+| Numerical Processing | NumPy |
+| Model Persistence | Python pickle |
+| Web Interface | HTML5 + CSS3 + Vanilla JavaScript |
+| Data Storage | JSON |
+| Music Links | YouTube Search URLs |
 
 ---
 
-## Installation & Setup
+## Project Structure
+
+```
+moodify/
+├── index.html          # Web app — open in browser for full UI
+├── recommender.py      # Python ML backend — CLI version
+├── requirements.txt    # Python dependencies
+├── mood_model.pkl      # Auto-generated trained model
+└── recommendation_log.json  # Auto-generated session history
+```
+
+---
+
+## Setup & Installation
 
 ### Requirements
 
-- Python 3.8 or higher  
-- pip  
+- Python 3.6 or higher
+- pip
 
 ### Installation Steps
 
-1. **Download or Clone the Project**
-   ```bash
-   git clone <repository-url>
-   cd music-recommender
-   ```
-
-2. **Install Dependencies**
-   ```bash
-   pip install flask pandas numpy
-   ```
-
-3. **Project Files**
-   Ensure the following files are present:
-   - app.py  
-   - recommender.py  
-   - songs.csv  
-   - templates/index.html  
-
----
-
-### Running the Project
-
+**1. Clone the repository**
 ```bash
-python app.py
+git clone https://github.com/yourusername/moodify.git
+cd moodify
 ```
 
-Then open your browser and go to:
-```
-http://127.0.0.1:5000/
-```
-
----
-
-## Instructions for Testing
-
-### Manual Testing Procedure
-
-1. Run the application  
-2. Open browser at localhost  
-3. Select:
-   - Mood  
-   - Energy level  
-   - Activity  
-
-4. Click **Get Recommendations**  
-5. Observe recommended songs  
-6. Select songs you like (if implemented)  
-7. Run multiple times to observe:
-   - Changing trends  
-   - Updated recommendations  
-
----
-
-### Test Cases
-
-**Test Case 1: Mood Matching**  
-- Input: Happy  
-- Expected: Upbeat/Pop/EDM songs  
-
-**Test Case 2: Energy Filtering**  
-- Input: Low energy  
-- Expected: Calm/Lo-fi songs  
-
-**Test Case 3: Trend Update**  
-- Run system multiple times  
-- Expected: Changing recommendations  
-
-**Test Case 4: Personalization**  
-- Select same artist multiple times  
-- Expected: More songs from that artist  
-
----
-
-## Screenshots / Sample Output
-
-### Input Selection
-```
-Mood: Happy
-Energy: High
-Activity: Workout
+**2. Install dependencies**
+```bash
+pip install -r requirements.txt
 ```
 
-### Output Recommendations
+**3. Run the web app**
+
+Simply double-click `index.html` or open it in any browser. No server required.
+
+**4. Run the Python CLI version**
+```bash
+python recommender.py
 ```
-Top Recommendations:
-1. Energy Rush - Artist A (EDM)
-2. Power Beats - Artist B (Hip-Hop)
-3. Feel Good Vibes - Artist C (Pop)
+Or on Windows with multiple Python versions:
+```bash
+py -3.13 recommender.py
 ```
 
 ---
 
-## Recommendation Logic
+## How to Use
 
-### Scoring Formula
+### Web App (Recommended for Demo)
+1. Open `index.html` in your browser
+2. Select your current mood using the mood chips
+3. Set your energy level using the slider
+4. Choose your time of day and current activity
+5. Click **Find My Music**
+6. Click any recommendation card to open YouTube
 
-| Factor | Description |
-|--------|------------|
-| Trend Score | Popularity of song |
-| Mood Match | Compatibility with user mood |
-| User Preference | Based on listening frequency |
-| Energy Match | Matches energy level |
+### Python CLI(Sample output)
+```
+=== Moodify — Mood-Based Music Recommender ===
 
-### Final Score
+Mood options: happy, sad, focused, romantic, angry, nostalgic, hyped, chill, lonely, motivated
+Your mood: happy
+Energy level (1-10): 7
+Time options: morning, afternoon, evening, night
+Time of day: evening
+Activity options: studying, workout, relaxing, commuting, cooking, partying, sleeping
+Current activity: relaxing
+
+🎵 Recommending music...
+
+1. Feel-Good Pop [English / Pop]
+   Upbeat pop anthems guaranteed to lift your spirits instantly.
+   ▶ https://youtube.com/results?search_query=feel+good+pop+songs+playlist+2024
+
+2. Bollywood Party Hits [Bollywood]
+   ...
+
+
+## How It Works
 
 ```
-final_score = trend_score + mood_weight + user_preference + energy_score
+User inputs (mood, energy, time, activity)
+        ↓
+Feature encoding (text → numbers)
+        ↓
+Decision Tree Classifier
+        ↓
+Probability scores for all 23 music categories
+        ↓
+Top 4 recommendations ranked by confidence
+        ↓
+YouTube search links generated
 ```
+
+### ML Concepts Used
+
+- **Decision Tree Classification** — learns rules from training data to map mood inputs to music categories
+- **Feature Encoding** — converts categorical inputs (mood, time, activity) into numerical features
+- **Probability-Based Ranking** — uses `predict_proba()` to rank all possible recommendations by confidence
+- **Model Persistence** — trained model saved with `pickle` so it doesn't retrain every run
+- **Rule-Based Scoring** — web version uses a weighted scoring system to complement the ML model
 
 ---
 
-## Code Architecture
+## Music Categories
 
-### File Structure
+| Genre | Examples |
+|---|---|
+| Lo-Fi | Study Beats, Chill Vibes |
+| Bollywood | Party Hits, Heartbreak, Romance, Motivation |
+| English | Feel-Good Pop, Sad Indie, Hype Anthems, Late Night |
+| Hip-Hop / Rap | Bangers, Chill R&B, Workout Rap |
+| Classical | Focus, Ambient/Calm |
+| Instrumental | Cinematic / Epic |
+| EDM | Party, Workout |
+| Jazz | Morning Jazz |
+| Acoustic | Morning Folk |
+| Ambient | Sleep Sounds |
+| Retro | 90s Hindi, 2000s English |
 
-```
-music-recommender/
-├── app.py
-├── recommender.py
-├── songs.csv
-├── templates/
-│   └── index.html
-└── README.md
-```
+---
 
-### Key Components
+## Sample Output
 
-- **app.py**: Handles Flask server and routing  
-- **recommender.py**: Core recommendation logic  
-- **songs.csv**: Dataset  
-- **index.html**: User interface  
+### Web App
+Select: **Mood → Focused | Energy → 6 | Time → Afternoon | Activity → Studying**
 
+Recommendations:
+- 🎵 Lo-Fi Study Beats → YouTube
+- 🎵 Classical Focus → YouTube
+- 🎵 Cinematic Instrumental → YouTube
+- 🎵 Chill Rap / R&B → YouTube
 ---
 
 ## Challenges Faced & Solutions
@@ -270,18 +246,27 @@ music-recommender/
 
 ---
 
-## References & Resources
+Here are the references you can add to your README:
 
-1. Python Documentation: https://docs.python.org/3/  
-2. Flask Documentation: https://flask.palletsprojects.com/  
-3. Pandas Documentation: https://pandas.pydata.org/  
-4. Recommendation Systems Concepts (online resources)  
+References & Resources
 
+scikit-learn Documentation — Decision Tree Classifier:-
+https://scikit-learn.org/stable/modules/tree.html
+scikit-learn — predict_proba() method:-
+https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html
+Python Documentation — pickle module:-
+https://docs.python.org/3/library/pickle.html
+Python Documentation — json module:-
+https://docs.python.org/3/library/json.html
+NumPy Documentation:-
+https://numpy.org/doc/stable/
+GeeksforGeeks — Decision Tree in Python:-
+https://www.geeksforgeeks.org/decision-tree-implementation-python/
 ---
 
 ## Author & Contact
 
-**Project**: BRAINSTORM - MAT Skill Test 
+**Project**: Moodify — Mood-Based Music Recommender
 **Version**: 1.0 
 **Created**: 27/03/2026 
 For questions, suggestions, or contributions, please contact the developer(Atharv Kala) or submit issues through the GitHub repository. 
@@ -292,5 +277,5 @@ For questions, suggestions, or contributions, please contact the developer(Athar
 This project is for educational purposes as part of academic coursework in VITyarthi.
 ---
 
-**Last Updated**: 27 March,2026  
+**Last Updated**: 28 March,2026  
 **Status**: Active
