@@ -178,7 +178,7 @@ YouTube search links generated
 ---
 
 ## Music Categories
-
+```
 | Genre | Examples |
 |---|---|
 | Lo-Fi | Study Beats, Chill Vibes |
