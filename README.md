@@ -249,11 +249,11 @@ https://numpy.org/doc/stable/
 Decision Tree in Python:-                                        
 https://www.geeksforgeeks.org/decision-tree-implementation-python/                               
 
-## Author & Contact Project: 
-Moodify — Mood-Based Music Recommender 
-Version: 1.0 
-Created: 27/03/2026 
-For questions, suggestions, or contributions, please contact the developer(Atharv Kala) or submit issues through the GitHub repository.
+## Author & Contact Project:                                       
+Moodify — Mood-Based Music Recommender                                          
+Version: 1.0                                
+Created: 27/03/2026                                                      
+For questions, suggestions, or contributions, please contact the developer(Atharv Kala) or submit issues through the GitHub repository.                                         
 
 ## License
 This project is for educational purposes as part of academic coursework in VITyarthi
