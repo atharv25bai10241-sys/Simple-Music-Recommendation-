@@ -234,38 +234,29 @@ Recommendations:
 7. Playlist generation  
 8. Mobile app version  
 
----
 
-Here are the references you can add to your README:
+References & Resources                                                   
+Decision Tree Classifier:-                                       
+https://scikit-learn.org/stable/modules/tree.html                              
+predict_proba() method:-                                                    
+https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html                       
+pickle module:-                        
+https://docs.python.org/3/library/pickle.html                             
+json module:-                         
+https://docs.python.org/3/library/json.html                             
+NumPy Documentation:-                                     
+https://numpy.org/doc/stable/                                      
+Decision Tree in Python:-                                        
+https://www.geeksforgeeks.org/decision-tree-implementation-python/                               
 
-References & Resources
-
-scikit-learn Documentation — Decision Tree Classifier:-
-https://scikit-learn.org/stable/modules/tree.html
-scikit-learn — predict_proba() method:-
-https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html
-Python Documentation — pickle module:-
-https://docs.python.org/3/library/pickle.html
-Python Documentation — json module:-
-https://docs.python.org/3/library/json.html
-NumPy Documentation:-
-https://numpy.org/doc/stable/
-GeeksforGeeks — Decision Tree in Python:-
-https://www.geeksforgeeks.org/decision-tree-implementation-python/
----
-
-## Author & Contact
-
-**Project**: Moodify — Mood-Based Music Recommender
-**Version**: 1.0 
-**Created**: 27/03/2026 
-For questions, suggestions, or contributions, please contact the developer(Atharv Kala) or submit issues through the GitHub repository. 
----
+## Author & Contact Project: 
+Moodify — Mood-Based Music Recommender 
+Version: 1.0 
+Created: 27/03/2026 
+For questions, suggestions, or contributions, please contact the developer(Atharv Kala) or submit issues through the GitHub repository.
 
 ## License
-
-This project is for educational purposes as part of academic coursework in VITyarthi.
----
+This project is for educational purposes as part of academic coursework in VITyarthi
 
 **Last Updated**: 28 March,2026  
 **Status**: Active
